@@ -57,9 +57,16 @@ export default function PostsScreen({ navigation, route }) {
         <TouchableOpacity
           activeOpacity={0.5}
           onPress={() => navigation.navigate("Map")}
-          style={{ alignItems: "center" }}
+          style={{ alignItems: "center", marginBottom: 20, marginTop: 20 }}
         >
           <Text style={{ color: "#1B4371", fontSize: 16 }}>MapScreen</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={() => navigation.navigate("Comments")}
+          style={{ alignItems: "center" }}
+        >
+          <Text style={{ color: "#1B4371", fontSize: 16 }}>Comments</Text>
         </TouchableOpacity>
       </View>
     </View>

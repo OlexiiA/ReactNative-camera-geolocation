@@ -10,6 +10,7 @@ import PostsScreen from "./Screens/mainScreens/PostsScreen";
 import CreatePostsScreen from "./Screens/mainScreens/CreatePostsScreen";
 import ProfileScreen from "./Screens/mainScreens/ProfileScreen";
 import MapScreen from "./Screens/nestedScreen/MapScreen";
+import CommentsScreen from "./Screens/nestedScreen/CommentsScreen";
 
 const AuthStack = createStackNavigator();
 const MainTab = createBottomTabNavigator();
@@ -30,7 +31,30 @@ export const useRoute = (isAuth) => {
         />
       </AuthStack.Navigator>
     );
+  } else {
+    return (
+      <AuthStack.Navigator>
+        <AuthStack.Screen
+          options={{ headerShown: false }}
+          name="MainTab"
+          component={MainTabScreen}
+        />
+        <AuthStack.Screen
+          options={{ headerShown: false }}
+          name="Map"
+          component={MapScreen}
+        />
+        <AuthStack.Screen
+          options={{ headerShown: false }}
+          name="Comments"
+          component={CommentsScreen}
+        />
+      </AuthStack.Navigator>
+    );
   }
+};
+
+const MainTabScreen = () => {
   return (
     <MainTab.Navigator screenOptions={{ tabBarShowLabel: false }}>
       <MainTab.Screen
@@ -78,16 +102,6 @@ export const useRoute = (isAuth) => {
         name="Profile"
         component={ProfileScreen}
       />
-      
-    </MainTab.Navigator> 
-    // ================НЕ МОЖУ ВСТАВИТИ=====================
-    //  <AuthStack.Navigator>
-    // <AuthStack.Screen
-    //       options={{ headerShown: false }}
-    //       name="Map"
-    //       component={MapScreen}
-    //     />
-    // </AuthStack.Navigator>
-    
+    </MainTab.Navigator>
   );
 };
