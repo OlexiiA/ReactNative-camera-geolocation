@@ -1,25 +1,67 @@
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+  Image,
+} from "react-native";
 import { Feather } from "@expo/vector-icons";
 
 const HorizontalLine = ({}) => {
   return <View style={styles.line}></View>;
 };
 
-export default function PostsScreen({ navigation }) {
+export default function PostsScreen({ navigation, route }) {
+  const [posts, setPosts] = useState([]);
+  console.log("route-params", route.params);
+
+  useEffect(() => {
+    if (route.params) {
+      setPosts((prevState) => [...prevState, route.params]);
+    }
+  }, [route.params]);
+  console.log("posts:", posts);
+
   const handlePress = () => {
     navigation.navigate("Login");
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <Text style={{ fontSize: 17, fontWeight: '500'}}>Публикации</Text>
-        <TouchableOpacity onPress={handlePress} style={{marginLeft: 101, marginRight: 15}}>
-          <Feather name="log-in" size={24} color="#BDBDBD" />
+    <View>
+      <View style={styles.container}>
+        <View style={styles.content}>
+          <Text style={{ fontSize: 17, fontWeight: "500" }}>Публикации</Text>
+          <TouchableOpacity
+            onPress={handlePress}
+            style={{ marginLeft: 101, marginRight: 15 }}
+          >
+            <Feather name="log-in" size={24} color="#BDBDBD" />
+          </TouchableOpacity>
+        </View>
+        <HorizontalLine />
+      </View>
+      <View>
+        <FlatList
+          data={posts}
+          keyExtractor={(item, indx) => indx.toString()}
+          renderItem={({ item }) => (
+            <View style={styles.boxImg}>
+              <Image source={{ uri: item.photo }} style={styles.img} />
+            </View>
+          )}
+        />
+      </View>
+      <View>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={() => navigation.navigate("Map")}
+          style={{ alignItems: "center" }}
+        >
+          <Text style={{ color: "#1B4371", fontSize: 16 }}>MapScreen</Text>
         </TouchableOpacity>
       </View>
-      <HorizontalLine />
     </View>
   );
 }
@@ -43,5 +85,16 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ccc",
     borderBottomWidth: 1,
     width: "100%",
+  },
+  boxImg: {
+    flex: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  img: {
+    width: 300,
+    height: 200,
+    borderRadius: 20,
   },
 });
